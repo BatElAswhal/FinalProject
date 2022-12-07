@@ -1,0 +1,108 @@
+import org.junit.Assert;
+import org.junit.Test;
+
+public class SauceDemoTests {
+    private long time_to_sleep=500;
+
+    //@Test
+            //test number 1-Buying process E2E
+    public void Processtest1() throws InterruptedException {
+        String expected= "THANK YOU FOR YOUR ORDER";
+        String url= "https://www.saucedemo.com/";
+
+        // selectors
+        String user_name_input_selector="#user-name";
+        String password_input_selector="#password";
+        String login_button_selector ="#login-button";
+        String first_item_add_to_cart_selector ="#add-to-cart-sauce-labs-onesie";
+        String second_item_add_to_cart_selector ="#add-to-cart-sauce-labs-backpack";
+        String cart_button_selector ="#shopping_cart_container > a";
+        String checkout_button_selector ="#checkout";
+        String  first_name_input_selector="#first-name";
+        String  last_name_input_selector="#last-name";
+        String  zip_cod_input_selector="#postal-code";
+        String continue_button_selector ="#continue";
+        String checkout_scrolling_down_selector ="#postal-code";
+        String finish_button_selector ="#finish";
+
+        // inputs
+
+        String user_name ="standard_user";
+        String password ="secret_sauce";
+        String first_name_input ="BatEl";
+        String last_name_input ="Ashwal";
+        String zip_cod_input ="6041918";
+
+        Main selenium = new Main();
+
+        selenium.driver.get(url);
+        selenium.driver.manage().window().maximize();
+        selenium.getElement(user_name_input_selector).sendKeys(user_name);
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(password_input_selector).sendKeys(password);
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(login_button_selector).click();
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(first_item_add_to_cart_selector).click();
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(second_item_add_to_cart_selector).click();
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(cart_button_selector).click();
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(checkout_button_selector).click();
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(first_name_input_selector).sendKeys(first_name_input);
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(last_name_input_selector).sendKeys(last_name_input);
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(zip_cod_input_selector).sendKeys(zip_cod_input);
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(continue_button_selector).click();
+        Thread.sleep(time_to_sleep);
+        selenium.getElement(finish_button_selector).click();
+        Thread.sleep(time_to_sleep);
+        String actualValue= selenium.getElement("#checkout_complete_container > h2").getText();
+        Assert.assertEquals(expected,actualValue);
+        selenium.driver.quit();
+
+    }
+        @Test
+        //test number 2-Select filter,adding product through products page and remove from product page.
+        public void Processtest2 () throws InterruptedException {
+            String expected = "Price (low to high)";
+            String url = "https://www.saucedemo.com/";
+
+            // selectors
+            String user_name_input_selector = "#user-name";
+            String password_input_selector = "#password";
+            String login_button_selector = "#login-button";
+            String sort_selectbox_selector = "#header_container > div.header_secondary_container > div.right_component > span > select";
+            String sort_activeoption_selector = "#header_container > div.header_secondary_container > div.right_component > span > span";
+            String LowToHigh_selector = "#header_container > div.header_secondary_container > div.right_component > span > select > option:nth-child(3)";
+            String add_to_cart_selector = "#add-to-cart-test\\.allthethings\\(\\)-t-shirt-\\(red\\)";
+            String titel_TestallTheThingsTShirtRed_selector = "#item_3_title_link > div";
+            String remove_button_selector = "#remove-sauce-labs-backpack";
+
+            // inputs
+            String user_name = "problem_user";
+            String password = "secret_sauce";
+
+            Main selenium = new Main();
+
+            selenium.driver.get(url);
+            selenium.driver.manage().window().maximize();
+            selenium.getElement(user_name_input_selector).sendKeys(user_name);
+            selenium.getElement(password_input_selector).sendKeys(password);
+            selenium.getElement(login_button_selector).click();
+            selenium.getElement(sort_selectbox_selector).click();
+            Thread.sleep(1500);
+            selenium.getElement(LowToHigh_selector).click();
+            String actualValue= selenium.getElement(sort_activeoption_selector).getText();
+            Assert.assertEquals(expected,actualValue);
+            selenium.getElement(add_to_cart_selector).click();
+            selenium.getElement(titel_TestallTheThingsTShirtRed_selector).click();
+            selenium.getElement(remove_button_selector).click();
+            selenium.driver.quit();
+            System.out.println();
+        }
+    }
