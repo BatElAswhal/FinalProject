@@ -2,7 +2,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class SauceDemoTests {
-    private long time_to_sleep=1500;
+    private long time_to_sleep=1750;
 
     @Test
             //test number 1-Buying process E2E
@@ -98,7 +98,7 @@ public class SauceDemoTests {
             selenium.driver.get(url);
             //maximize the window
             selenium.driver.manage().window().maximize();
-            //sing-in with "problem user" account
+            //sign-in with "problem user" account
             selenium.getElement(user_name_input_selector).sendKeys(user_name);
             Thread.sleep(time_to_sleep);
             selenium.getElement(password_input_selector).sendKeys(password);
