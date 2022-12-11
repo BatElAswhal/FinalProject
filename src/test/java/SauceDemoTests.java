@@ -2,9 +2,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class SauceDemoTests {
-    private long time_to_sleep=500;
+    private long time_to_sleep=1500;
 
-    //@Test
+    @Test
             //test number 1-Buying process E2E
     public void Processtest1() throws InterruptedException {
         String expected= "THANK YOU FOR YOUR ORDER";
@@ -67,42 +67,52 @@ public class SauceDemoTests {
 
     }
         @Test
-        //test number 2-Select filter,adding product through products page and remove from product page.
+        //test number 2-adding and remove product through product page.
+        //pre-condition- clear cookies.
         public void Processtest2 () throws InterruptedException {
-            String expected = "Price (low to high)";
+            String expected = "ADD TO CART";
             String url = "https://www.saucedemo.com/";
 
             // selectors
             String user_name_input_selector = "#user-name";
             String password_input_selector = "#password";
             String login_button_selector = "#login-button";
-            String sort_selectbox_selector = "#header_container > div.header_secondary_container > div.right_component > span > select";
-            String sort_activeoption_selector = "#header_container > div.header_secondary_container > div.right_component > span > span";
-            String LowToHigh_selector = "#header_container > div.header_secondary_container > div.right_component > span > select > option:nth-child(3)";
-            String add_to_cart_selector = "#add-to-cart-test\\.allthethings\\(\\)-t-shirt-\\(red\\)";
             String titel_TestallTheThingsTShirtRed_selector = "#item_3_title_link > div";
+            String add_to_cart_selector = "#add-to-cart-sauce-labs-backpack";
             String remove_button_selector = "#remove-sauce-labs-backpack";
-
+            String toggle_inventory_button =".btn.btn_small.btn_inventory";
             // inputs
             String user_name = "problem_user";
             String password = "secret_sauce";
 
             Main selenium = new Main();
-
+            //open the website
             selenium.driver.get(url);
+            //maximize the window
             selenium.driver.manage().window().maximize();
+            //sing-in with "problem user" account
             selenium.getElement(user_name_input_selector).sendKeys(user_name);
+            Thread.sleep(time_to_sleep);
             selenium.getElement(password_input_selector).sendKeys(password);
+            Thread.sleep(time_to_sleep);
             selenium.getElement(login_button_selector).click();
-            selenium.getElement(sort_selectbox_selector).click();
-            Thread.sleep(1500);
-            selenium.getElement(LowToHigh_selector).click();
-            String actualValue= selenium.getElement(sort_activeoption_selector).getText();
-            Assert.assertEquals(expected,actualValue);
-            selenium.getElement(add_to_cart_selector).click();
+            Thread.sleep(time_to_sleep);
+            //enter to product page
             selenium.getElement(titel_TestallTheThingsTShirtRed_selector).click();
+            Thread.sleep(time_to_sleep);
+            //add the product to cart
+            selenium.getElement(add_to_cart_selector).click();
+            Thread.sleep(time_to_sleep);
+            //trying to press on "remove" button
             selenium.getElement(remove_button_selector).click();
-            selenium.driver.quit();
-            System.out.println();
+            Thread.sleep(time_to_sleep);
+            //the text button should change from "remove" to "add to cart"
+            String actualValue= selenium.getElement(toggle_inventory_button).getText();
+            Assert.assertEquals(expected,actualValue);
+            Thread.sleep(time_to_sleep);
+           selenium.driver.quit();
+
+
+
         }
     }
