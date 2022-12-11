@@ -6,6 +6,7 @@ public class SauceDemoTests {
 
     @Test
     //test number 1-Buying process E2E
+
     public void Processtest1() throws InterruptedException {
         String expected = "THANK YOU FOR YOUR ORDER";
         String url = "https://www.saucedemo.com/";
