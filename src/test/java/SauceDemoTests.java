@@ -22,8 +22,8 @@ public class SauceDemoTests {
         String  last_name_input_selector="#last-name";
         String  zip_cod_input_selector="#postal-code";
         String continue_button_selector ="#continue";
-        String checkout_scrolling_down_selector ="#postal-code";
         String finish_button_selector ="#finish";
+        String checkout_complete= "#checkout_complete_container > h2";
 
         // inputs
 
@@ -35,20 +35,27 @@ public class SauceDemoTests {
 
         Main selenium = new Main();
 
+        //open the website
         selenium.driver.get(url);
+        //maximize the window
         selenium.driver.manage().window().maximize();
+        //sign-in with "standard user" account
         selenium.getElement(user_name_input_selector).sendKeys(user_name);
         Thread.sleep(time_to_sleep);
         selenium.getElement(password_input_selector).sendKeys(password);
         Thread.sleep(time_to_sleep);
         selenium.getElement(login_button_selector).click();
         Thread.sleep(time_to_sleep);
+        //add the first product to cart
         selenium.getElement(first_item_add_to_cart_selector).click();
         Thread.sleep(time_to_sleep);
+        //add the second product to cart
         selenium.getElement(second_item_add_to_cart_selector).click();
         Thread.sleep(time_to_sleep);
+        //navigate to cart
         selenium.getElement(cart_button_selector).click();
         Thread.sleep(time_to_sleep);
+        //checkout process
         selenium.getElement(checkout_button_selector).click();
         Thread.sleep(time_to_sleep);
         selenium.getElement(first_name_input_selector).sendKeys(first_name_input);
@@ -61,7 +68,8 @@ public class SauceDemoTests {
         Thread.sleep(time_to_sleep);
         selenium.getElement(finish_button_selector).click();
         Thread.sleep(time_to_sleep);
-        String actualValue= selenium.getElement("#checkout_complete_container > h2").getText();
+        //the text in the end of Successful checkout should be  "THANK YOU FOR YOUR ORDER"
+        String actualValue= selenium.getElement(checkout_complete).getText();
         Assert.assertEquals(expected,actualValue);
         selenium.driver.quit();
 
